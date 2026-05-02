@@ -14,7 +14,7 @@ import { Botao } from '../Botao';
  */
 export function FormularioDeEvento() {
   return (
-    <form className="form-evento">
+    <form className="form-evento" action="#">
       <TituloDoFormulario>
         Preencha para criar um evento:
       </TituloDoFormulario>
