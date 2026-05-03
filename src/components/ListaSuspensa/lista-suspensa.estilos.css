@@ -1,9 +1,13 @@
 .lista-suspensa-form {
     background-color: transparent;
     border-radius: 8px;
-    color: #4A4949;
+    color: #9c9a9a;
     font-size: 16px;
     font-weight: 400;
     line-height: 120%;
     padding: 8px 16px;
+}
+
+.lista-suspensa-form > option {
+    color: #4A4949;
 }

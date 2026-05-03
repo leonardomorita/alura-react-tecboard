@@ -1,4 +1,5 @@
-import './App.css'
+import './App.css';
+import { useState } from 'react';
 import { Banner } from './components/Banner';
 import { CardEvento } from './components/CardEvento';
 import { FormularioDeEvento } from './components/FormularioDeEvento';
@@ -14,14 +15,23 @@ function App() {
     {id: 6, nome: 'cloud'}
   ];
 
-  const eventos = [
+  const [eventos, setEventos] = useState([
     {
       capa: 'https://raw.githubusercontent.com/viniciosneves/tecboard-assets/refs/heads/main/imagem_1.png',
       tema: temas[0],
       data: new Date(),
       titulo: 'Mulheres no Front'
     }
-  ];
+  ]);
+
+  /**
+   * Adicionar um novo evento.
+   * 
+   * @param {Array<{capa: string, tema: {id: number, nome: string}, data: Date, titulo: string}>} evento
+   */
+  function adicionarEvento(evento) {
+    setEventos([...eventos, evento]);
+  }
 
   return (
     <main>
@@ -31,12 +41,16 @@ function App() {
 
       <Banner />
 
-      <FormularioDeEvento />
+      <FormularioDeEvento temas={temas} adicionarEvento={adicionarEvento} />
 
       {temas.map((tema, index) => (
         <section key={index}>
           <Tema tema={tema} />
-          <CardEvento evento={eventos[0]} />
+
+          {eventos.map((evento, index) => (
+            <CardEvento key={index} evento={evento} />
+          ))}
+
         </section>
       ))}
     </main>

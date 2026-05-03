@@ -12,9 +12,21 @@ import { Botao } from '../Botao';
  * 
  * @returns JSX.Element
  */
-export function FormularioDeEvento() {
+export function FormularioDeEvento(props) {
+  function formSubmetido (formData) {
+    const evento = {
+      capa: formData.get('capaEvento'),
+      tema: props.temas.find(function (item) {
+        return item.id == formData.get('temaEvento')
+      }),
+      data: new Date(formData.get('dataEvento')),
+      titulo: formData.get('nomeEvento')
+    };
+    props.adicionarEvento(evento);
+  }
+
   return (
-    <form className="form-evento" action="#">
+    <form className="form-evento" action={formSubmetido}>
       <TituloDoFormulario>
         Preencha para criar um evento:
       </TituloDoFormulario>
@@ -22,7 +34,12 @@ export function FormularioDeEvento() {
       <div className="campos">
         <CampoDeFormulario>
           <DescricaoDoCampo htmlFor="nome">Qual é o nome do evento?</DescricaoDoCampo>
-          <CampoDeEntrada type="text" id="nome" name="dataEvento" placeholder="Summer dev hits" />
+          <CampoDeEntrada type="text" id="nome" name="nomeEvento" placeholder="Summer dev hits" />
+        </CampoDeFormulario>
+
+        <CampoDeFormulario>
+          <DescricaoDoCampo htmlFor="capa">Qual é o endereçoda imagem de capa do evento?</DescricaoDoCampo>
+          <CampoDeEntrada type="text" id="capa" name="capaEvento" placeholder="http://..." />
         </CampoDeFormulario>
 
         <CampoDeFormulario>
@@ -32,7 +49,7 @@ export function FormularioDeEvento() {
 
         <CampoDeFormulario>
           <DescricaoDoCampo htmlFor="temaEvento">Tema do evento</DescricaoDoCampo>
-          <ListaSuspensa name="temaEvento"></ListaSuspensa>
+          <ListaSuspensa id="temaEvento" name="temaEvento" itens={props.temas} />
         </CampoDeFormulario>
 
         <div className='acoes'>
