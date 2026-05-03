@@ -43,16 +43,33 @@ function App() {
 
       <FormularioDeEvento temas={temas} adicionarEvento={adicionarEvento} />
 
-      {temas.map((tema, index) => (
-        <section key={index}>
-          <Tema tema={tema} />
+      <section className="container">
+        {temas.map(function (tema, index) {
+          // Filtrar o array de eventos para verificar se existe algum evento do tema atual.
+          const existeEventoNoTema = eventos.some(function (evento, index) {
+            return evento.tema.id == tema.id;
+          });
 
-          {eventos.map((evento, index) => (
-            <CardEvento key={index} evento={evento} />
-          ))}
+          if (!existeEventoNoTema) return null;
 
-        </section>
-      ))}
+          return (
+            <section key={index}>
+              <Tema tema={tema} />
+
+              <div className="eventos">
+                {eventos
+                  .filter((evento, index) => (
+                    evento.tema.id == tema.id
+                  ))
+                  .map((evento, index) => (
+                    <CardEvento key={index} evento={evento} />
+                  ))
+                }
+              </div>
+            </section>
+          )
+        })}
+      </section>
     </main>
   )
 }
